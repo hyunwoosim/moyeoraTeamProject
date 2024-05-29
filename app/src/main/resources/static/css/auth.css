@@ -1,0 +1,230 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Title */
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #96918B; /* Accent color */
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px; /* Add some margin for spacing */
+}
+
+.logo {
+  max-width: 200px; /* Adjust the width as needed */
+}
+
+/* Form Styles */
+.login-form-wrap {
+  max-width: 450px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #E1D39F;
+  /*box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);*/
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #E1D39F;
+  border-radius: 4px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #E1D39F;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button[type="submit"]:hover {
+  background-color: #D9C48A;
+}
+
+.checkbox-label {
+    display: block;
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] { display: none; }
+
+.checkbox-on { width: 20px; height: 20px; border: solid #D9C48A; position: absolute; top: 0; left: 0; }
+
+.checkbox-label input[type="checkbox"]:checked + .checkbox-on { background: #D9C48A; }
+.checkbox-on:after { content: ""; position: absolute; display: none; }
+.checkbox-label input[type="checkbox"]:checked + .checkbox-on:after { display: block; }
+.checkbox-on:after { width: 6px; height: 10px; border: solid #fff; border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg); position: absolute; left: 6px; top: 2px; }
+
+
+a {
+  display: block;
+  margin-top: 10px;
+  color: #E1D39F;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.oauth-icon {
+  width: 200px;
+  height: 40px;
+  object-fit: cover;
+}
+
+.login-menu {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.login-menu a {
+  text-decoration: none;
+  color: #333;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.login-menu a:hover {
+  background-color: #E1D39F;
+  color: white;
+}
+
+.social-login-icons-wrap {
+  max-width: 450px;
+  margin: 20px auto;
+  position: relative;
+  width: 100%;
+  padding: 34px 0;
+  border-top: 1px solid #f5f5f5;
+}
+
+.social-login-icons {
+  width: 250px;
+  justify-content: center;
+  line-height: normal;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.social-login-icons a {
+  margin-bottom: 8px;
+}
+
+.social-login-icons::after {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    content: "또는";
+    margin: 0 auto;
+    padding: 0 10px;
+    background: #fff;
+    font-size: 12px;
+    color: #b2b2b2;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+/* Result Sections */
+.result {
+  margin-top: 100px;
+}
+
+.result p {
+  margin: 0;
+  font-size: 18px;
+  text-align: center;
+}
+
+.result span {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #E1D39F;
+  text-align: center;
+}
+
+.result a {
+  display: inline-block;
+  padding: 8px 20px;
+  background-color: #E1D39F;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.result .btn-wrap {
+  text-align: center;
+}
+
+.result a:hover {
+  background-color: #D9C48A;
+}
+
+/* Message */
+.message {
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  /*box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);*/
+  text-align: center;
+}
+
+.message p {
+  margin: 10px 0;
+}
+
+.message a {
+  display: inline-block;
+  padding: 8px 20px;
+  background-color: #E1D39F;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.message a:hover {
+  background-color: #D9C48A;
+}

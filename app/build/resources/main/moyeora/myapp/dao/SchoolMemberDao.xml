@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="moyeora.myapp.dao.SchoolMemberDao">
+
+  <resultMap id="SchoolMemberMap" type="SchoolMember">
+    <id column="user_no" property="no"/>
+    <result column="nickname" property="nickname"/>
+    <result column="photo" property="photo"/>
+
+    <association property="level" javaType="Level">
+        <id column="level_no" property="levelNo"/>
+        <result column="level_name" property="levelName"/>
+    </association>
+
+    <association property="school" javaType="School">
+         <id column="school_no" property="no"/>
+         <result column="school_name" property="name"/>
+    </association>
+
+    <association property="schoolClass" javaType="SchoolClass">
+             <id column="class_no" property="no"/>
+        </association>
+
+  </resultMap>
+
+
+<select id="findByClassMember" resultMap="SchoolMemberMap" parameterType="int">
+
+select
+ cu.class_no,
+ cu.user_no,
+ cu.school_no,
+ u.nickname,
+ u.photo,
+ su.level_no,
+ l.name as level_name
+ from
+ class_users as cu
+ inner join users as u on cu.user_no = u.user_no
+ inner join school_users as su on cu.user_no = su.user_no and su.school_no = cu.school_no
+ inner join levels as l on su.level_no = l.level_no
+ where
+ cu.class_no = #{classNo};
+
+</select>
+
+</mapper>

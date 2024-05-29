@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset='UTF-8'>
+    <title>moyeora login</title>
+    <link href="/css/auth.css" rel="stylesheet"/>
+    <th:block th:replace="common/bootstrap :: bootstrap"></th:block>
+</head>
+<body>
+
+<div class="logo-container">
+    <a href="/home"><img class="logo" src="/img/moyeora-logo.png"></a>
+</div>
+
+<div class="login-form-wrap rounded">
+    <form id="loginForm" data-th-action="@{/auth/login}" method="post" >
+
+        <label for="email"></label>
+        <input id="email" data-th-value="${email}" name="email" type="text" placeholder="email">
+
+        <label for="password"></label>
+        <input id="password" name="password" type="password" placeholder="password" autocomplete="false">
+
+        <button type="submit" class="mt-4 mb-2" onclick="return checkForm()">로그인</button>
+
+
+        <label for="saveEmail" class="checkbox-label">
+            <input id="saveEmail" name="saveEmail" type="checkbox">
+            <span class="checkbox-on"></span>
+            이메일 저장
+        </label>
+
+        <div style="color:red;" data-th-if="${error}" data-th-text="${exception}"></div>
+        <div class="login-menu">
+            <a data-th-href="@{/auth/findEmail}">이메일 찾기</a>
+            <a data-th-href="@{/auth/findPassword}">비밀번호 찾기</a>
+            <a data-th-href="@{/user/form}">회원가입</a>
+        </div>
+    </form>
+</div>
+
+
+<div class="social-login-icons-wrap">
+    <div class="social-login-icons">
+        <a data-th-href="@{/oauth2/authorization/naver}"><img class="oauth-icon" src="/img/btnG_official.png"></a>
+        <a data-th-href="@{/oauth2/authorization/google}"><img class="oauth-icon" src="/img/web_neutral_sq_ctn@1x.png"></a>
+        <a data-th-href="@{/oauth2/authorization/kakao}"><img class="oauth-icon" src="/img/kakao_login_medium_narrow.png"></a>
+    </div>
+</div>
+
+<script>
+    function checkForm() {
+      var email = document.getElementById("email").value;
+      if ( email == null || email == "" || email.length < 1 ) {
+        alert("이메일을 입력하세요.");
+        return false;
+      }
+      var password = document.getElementById("password").value;
+        if ( password == null || password == "" || password.length < 1 ) {
+        alert("비밀번호를 입력하세요.");
+        return false;
+      }
+    }
+</script>
+
+</body>
+</html>

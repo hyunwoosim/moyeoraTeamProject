@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="view" content="width=device-width, initial-scale=1.0">
+
+<html lang='en' xmlns:th="http://www.w3.org/1999/xhtml">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+
+<head>
+    <title>비트캠프 데브옵스 5기</title>
+</head>
+<body>
+
+<div data-th-fragment="modal" class="modal fade" id="postModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">댓글</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="post-form" action="view.html" data-th-object="${post}" enctype='multipart/form-data' method='get'>
+                    <input type="hidden" name='no'>
+                    <input type="hidden" name='schoolNo'>
+
+                    <h3>댓글 목록</h3>
+                    <table id="commentsTable" class="table">
+                        <thead>
+                        <tr>
+                            <th>사진</th>
+                            <th>닉네임</th>
+                            <th>내용</th>
+                            <th>작성일</th>
+                            <th style="display: none;">댓글 번호</th>
+                            <th style="display: none;">댓글 유저번호</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- 댓글 목록이 동적으로 추가될 부분 -->
+                        </tbody>
+                    </table>
+                    <button type="button" id="addComment" class="btn btn-primary">댓글 등록</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

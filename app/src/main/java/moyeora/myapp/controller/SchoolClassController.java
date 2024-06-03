@@ -54,17 +54,13 @@ public class SchoolClassController {
 
   @GetMapping("realCalendar")
   public void form(Model model,@LoginUser User loginUser) throws Exception {
-//    model.addAttribute("schoolMembers",schoolMemberService.list(schoolNo));
     model.addAttribute("loginUser",loginUser.getNo());
-    //    System.out.println("realCalendar@@@@@@@@" + schoolNo);
 
   }
 
   @GetMapping("calendar")
   @ResponseBody
   public List<SchoolClass> Calendar(int schoolNo) throws Exception {
-    System.out.println("=====classcontorller.schoolClass==============>    " + schoolClassService);
-    System.out.println("calendar@@@@@@@@" + schoolNo);
     return schoolClassService.schoolCalendarList(schoolNo);
   }
 
@@ -81,20 +77,13 @@ public class SchoolClassController {
                     int schoolNo
   ) throws Exception{
 
-    System.out.println("1111111111111111111111111111111111");
     clazz.setUserNo(loginUser.getNo());
     clazz.setSchoolNo(schoolNo);
-    System.out.println("@@@@@@@@@@(add)loginUser@@@@@@@@@"+loginUser);
-    System.out.println("@@@@@@@@@@(add)schoolNo@@@@@@@@@"+schoolNo);
-    System.out.println("@@@@@@@@@@(add)loginUser.getNo()@@@@@@@@@"+loginUser.getNo());
-    System.out.println("@@@@@@@@@@(add)file.getSize()@@@@@@@@@"+file.getSize());
     if(file.getSize() > 0){
       String filename = fileUpload.upload(this.bucket, this.uploadDir, file);
       clazz.setPhoto(filename);
     }
 
-    System.out.println("=====classcontorller.zonid==============>    " + zoneId);
-    System.out.println("===================>    " + Date.from(startAt2.atZone(zoneId).toInstant()));
 
     Date startAtDate = Date.from(startAt2.atZone(zoneId).toInstant());
     Date endedAtDate = Date.from(endedAt2.atZone(zoneId).toInstant());
@@ -102,11 +91,6 @@ public class SchoolClassController {
     clazz.setStartAt(startAtDate);
     clazz.setEndedAt(endedAtDate);
     schoolClassService.add(clazz);
-
-    System.out.println("=======classcontroller.startdate============>    " + startAtDate);
-    System.out.println("=========classcontrollr.endeddate==========>    " + endedAtDate);
-
-    System.out.println("=======classcontroller============>    " + clazz);
 
 
     JsonResult jsonResult = new JsonResult();
@@ -129,11 +113,8 @@ public class SchoolClassController {
   @GetMapping("findByClassMember")
   @ResponseBody
   public Object findByClassMember(int classNo) throws Exception {
-    System.out.println("@@@@@@@@@findByClassMember 실행@@@@@@@@@@@@@@@@@");
     HashMap<String, Object> result = new HashMap<>();
-    System.out.println("@@@@@@@@@findByClassMember@@@@@@@@@@@@@@@@@");
     result.put("schoolMembers",schoolMemberService.list(classNo));
-    System.out.println("@@@@@@@@@1111111111@@@@@@@@@@@@@@@@@"+schoolMemberService.list(classNo));
     return result;
   }
 
@@ -141,11 +122,7 @@ public class SchoolClassController {
   @ResponseBody
   public Object attend(@RequestBody SchoolClassRequestDTO schoolClassRequestDTO, @LoginUser User loginUser) throws Exception {
     schoolClassRequestDTO.setUserNo(loginUser.getNo());
-    System.out.println("@@@@@@@@@@(insert)loginUser.getNo()@@@@@@@@@"+loginUser.getNo());
     schoolClassService.insert(schoolClassRequestDTO);
-    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@");
-    System.out.println(schoolClassRequestDTO);
-    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@");
     return "";
   }
 
@@ -154,11 +131,7 @@ public class SchoolClassController {
   @ResponseBody
   public Object MemberDelete(@RequestBody SchoolClassRequestDTO schoolClassRequestDTO, @LoginUser User loginUser) throws Exception {
     schoolClassRequestDTO.setUserNo(loginUser.getNo());
-    System.out.println("@@@@@@@@@@(memberDelete)loginUser.getNo()@@@@@@@@@"+loginUser.getNo());
     schoolClassService.memberDelete(schoolClassRequestDTO);
-    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@");
-    System.out.println(schoolClassRequestDTO);
-    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@");
     return "";
   }
 
@@ -166,26 +139,19 @@ public class SchoolClassController {
   @ResponseBody
   public void classDelete(@RequestBody SchoolClass clazz, @LoginUser User loginUser) throws Exception {
 
-    System.out.println("@@@@@@classDelete clazz.getUserNo()@@@@@@@" + clazz.getUserNo());
-    System.out.println("@@@@@@classDelete loginUser.getNo()@@@@@@@" + loginUser.getNo());
 
   if (clazz.getUserNo() == loginUser.getNo()) {
 
 
     ClassDeleteDTO classDeleteDTO = new ClassDeleteDTO();
     classDeleteDTO.setClassNo(clazz.getNo());
-    System.out.println("@@@@@@classDelete@@@@@@@" + clazz.getNo());
 
     classDeleteDTO.setUserNo(loginUser.getNo());
-    System.out.println("@@@@classDelete@@@@@@(classDelete)loginUser.getNo()@@@@@@@@@" + loginUser.getNo());
 
     SchoolClassRequestDTO schoolClassRequestDTO = new SchoolClassRequestDTO();
     schoolClassRequestDTO.setUserNo(loginUser.getNo());
     schoolClassRequestDTO.setSchoolNo(clazz.getSchoolNo());
     schoolClassRequestDTO.setClassNo(classDeleteDTO.getClassNo());
-    System.out.println("@@@@@@classDelete@@@@@@@");
-    System.out.println(schoolClassRequestDTO);
-    System.out.println("@@@@@@@classDelete@@@@@@");
 
     schoolClassService.memberDelete(schoolClassRequestDTO);
     schoolClassService.classDelete(classDeleteDTO);
@@ -205,14 +171,9 @@ public class SchoolClassController {
                        LocalDateTime endedAt3,
                        ZoneId zoneId) throws Exception {
 
-      System.out.println("$$$$$$$$$$$$$classUpdate clazz.getNo$$$$$$$$$$$$$$" + clazz.getNo());
-      System.out.println("=======classcontroller.startdate============>    " + startAt3);
-      System.out.println("=========classcontrollr.endeddate==========>    " + endedAt3);
 
 
       SchoolClass old = schoolClassService.get(clazz.getNo());
-      System.out.println("$$$$$$$$$$$$$classUpdate$ old$$$$$$$$$$$$$" + old);
-      System.out.println("$$$$$$$$$$$$$$classUpdate old.getNo$$$$$$$$$$$$$" + old.getNo());
       if (old == null) {
         throw new Exception("회원 번호가 유효하지 않습니다.");
       }
@@ -234,15 +195,8 @@ public class SchoolClassController {
       clazz.setStartAt(startAtDate);
       clazz.setEndedAt(endedAtDate);
 
-      System.out.println("=======classcontroller.startdate============>    " + startAtDate);
-      System.out.println("=========classcontrollr.endeddate==========>    " + endedAtDate);
-
-      System.out.println("$$$$$$$$$$$$$classUpdate clazz$$$$$$$$$$$$$$" + clazz);
 
       schoolClassService.classUpdate(clazz);
-      System.out.println("@@@@업데이트 업데이트 업데이트@@@@@");
-      System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ clazz);
-      System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ schoolClassService);
 
     }
 

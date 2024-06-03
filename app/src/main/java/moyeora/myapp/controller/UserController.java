@@ -77,7 +77,7 @@ public class UserController implements InitializingBean {
   public void view(Model model, @LoginUser User loginUser) throws Exception {
     User user = userService.get(loginUser.getNo());
 
-    System.out.println("============>");
+
     System.out.println(user);
 
 
@@ -89,11 +89,8 @@ public class UserController implements InitializingBean {
 
 
     System.out.println(user);
-    model.addAttribute("user",user);
-    model.addAttribute("userTagMap",userTagMap);
-    model.addAttribute("tags",tagService.findAllTag());
+
     for(UserTag tag : user.getTags()) {
-      System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@"+tag.getTagNo());
     }
   }
 
@@ -101,8 +98,6 @@ public class UserController implements InitializingBean {
   public String update(User user, MultipartFile file, @LoginUser User loginUser) throws Exception {
 
     User old = userService.get(loginUser.getNo());
-    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$" + old);
-    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$" + old.getNo());
     if (old == null) {
       throw new Exception("회원 번호가 유효하지 않습니다.");
     }
@@ -110,7 +105,6 @@ public class UserController implements InitializingBean {
 
     user.setCreatedAt(old.getCreatedAt());
 
-    System.out.println("$$$$$$$$$$$$$file.getSize()$$$$$$$$$$$$$$" + file.getSize());
 
     if(file.getSize() > 0){
       String filename = fileUpload.upload(this.bucket, this.uploadDir, file);
@@ -121,8 +115,6 @@ public class UserController implements InitializingBean {
     }
 
     userService.update(user);
-    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ user);
-    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ userService);
     return "redirect:/index";
   }
 
@@ -133,10 +125,7 @@ public class UserController implements InitializingBean {
     User user = new User();
     user.setPassword(password);
     user.setNo(loginUser.getNo());
-    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + password);
 
-    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ userService);
-    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + userService.passwordUpdate(user));
     userService.passwordUpdate(user);
 
     return "비밀번호가 성공적으로 변경되었습니다.";
@@ -153,12 +142,6 @@ public class UserController implements InitializingBean {
     model.addAttribute("status", "sent");
     redisUtil.setDataExpire(authId + "_e", email, 60 * 5L);
 
-
-    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@" + authId + "_e");
-    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@" + email);
-    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@" + authId);
-    System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@" + model.getAttribute("status"));
-
     Map<String, Object> result = new HashMap<>();
     result.put("authId", authId);
     return result;
@@ -170,10 +153,6 @@ public class UserController implements InitializingBean {
 
     mailService.sendEmail(email, subject, code, authId, template);
 
-    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$" + email);
-    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$" + authId);
-    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$" + subject);
-    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$" + template);
     redisUtil.setDataExpire(authId, code, 60 * 5L);
     return authId;
   }
@@ -189,11 +168,6 @@ public class UserController implements InitializingBean {
 
     String savedCode = (String) redisUtil.getData(authId);
 
-    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$" + email);
-    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$" + code);
-    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$" + authId);
-    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$" + model);
-    System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$" + savedCode);
 
     if (savedCode == null) {
       model.addAttribute("status", "savedCode == null");
@@ -201,7 +175,6 @@ public class UserController implements InitializingBean {
       model.addAttribute("status", "savedCode != code");
     } else {
       String userEmail = (String) redisUtil.getData(authId + "_e");
-      System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + userEmail);
       model.addAttribute("status", "okok");
       if (redisUtil.existData(authId)) {
         redisUtil.deleteData(authId);
